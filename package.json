@@ -1,7 +1,7 @@
 {
-    "name": "basic-node-js-project-template",
+    "name": "devlogged",
     "version": "1.0.0",
-    "description": "This is a basic Node js Project Folder Template",
+    "description": "A Blog app for devlopers to share the post related to tech and software devlopment",
     "main": "index.js",
     "scripts": {
         "dev": "npx nodemon src/index.js"
@@ -9,9 +9,11 @@
     "author": "Aditya Sarode",
     "license": "ISC",
     "dependencies": {
+        "bcryptjs": "^3.0.2",
         "dotenv": "^16.4.7",
         "express": "^4.21.2",
         "http-status-codes": "^2.3.0",
+        "jsonwebtoken": "^9.0.2",
         "mysql2": "^3.13.0",
         "nodemon": "^3.1.9",
         "sequelize": "^6.37.6",
