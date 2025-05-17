@@ -58,13 +58,13 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { email, password_hash } = req.body;
+        const { email, password } = req.body;
         const user = await User.findOne({ where: { email } });
 
-        if (!user || !(await bcrypt.compare(password_hash, user.password_hash)))
+        if (!user || !(await bcrypt.compare(password, user.password_hash)))
             return res
                 .status(StatusCodes.UNAUTHORIZED)
-                .json({ message: "Invalid credintials" });
+                .json({ message: "Invalid credintials", success: false });
 
         const token = jwt.sign(
             { id: user.id, username: user.username, email: user.email },
@@ -72,13 +72,10 @@ const login = async (req, res) => {
             { expiresIn: JWT_EXPIRES_IN }
         );
 
-        res.cookie("token", token, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
-        });
-
         res.status(StatusCodes.OK).json({
             message: "Login succesfully",
+            success: true,
+            token: token,
             user: {
                 id: user.id,
                 username: user.username,

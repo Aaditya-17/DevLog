@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
     const [form, setForm] = useState({
@@ -6,7 +7,7 @@ function Register() {
         email: "",
         password: "",
         bio: "",
-        profile_image: null, // Updated to handle file input
+        profile_image: null,
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -15,6 +16,7 @@ function Register() {
     const [emailStatus, setEmailStatus] = useState(null);
     const usernameTimeout = useRef();
     const emailTimeout = useRef();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -112,6 +114,7 @@ function Register() {
             });
             setUsernameStatus(null);
             setEmailStatus(null);
+            navigate("/login");
         } catch (err) {
             setError(err.message);
         } finally {
