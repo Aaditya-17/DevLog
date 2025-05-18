@@ -1,11 +1,11 @@
 const { AuthController } = require("../../controllers");
 const express = require("express");
 const router = express.Router();
-const { upload } = require("../../controllers/auth-controller");
+const { uploadProfileImg } = require("../../middlewares");
 
 router.post(
     "/register",
-    upload.single("profile_image"),
+    uploadProfileImg.single("profile_image"),
     AuthController.register
 );
 router.post("/login", AuthController.login);

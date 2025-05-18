@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { Post } = require("../models");
+const { Post, Tag } = require("../models");
 const { PostRepository } = require("../repositories");
 const { slugify } = require("../utils");
 
@@ -7,19 +7,37 @@ const postRepository = new PostRepository();
 
 const createPost = async (req, res) => {
     try {
-        const { title, content, cover_image } = req.body;
+        const { title, content, tags } = req.body;
+        const cover_image = req.file?.filename || null;
+
+        if (!title || !content) {
+            return res
+                .status(StatusCodes.NO_CONTENT)
+                .json({ error: "title and content required !!" });
+        }
+
         const slug = slugify(title);
-        console.log(title, content, cover_image);
-        const post = await postRepository.create({
+
+        const newPost = await Post.create({
             user_id: req.body.id,
             title,
-            slug,
             content,
             cover_image,
+            slug,
         });
+        const tags_arr = tags.split(",");
+
+        if (tags_arr && Array.isArray(tags_arr)) {
+            for (let tagname of tags_arr) {
+                console.log(tagname);
+                const [tag] = await Tag.findOrCreate({
+                    where: { name: tagname },
+                });
+                await newPost.addTag(tag);
+            }
+        }
         res.status(StatusCodes.CREATED).json({
-            message: "Post Created",
-            data: post,
+            message: "Post created successfully",
         });
     } catch (err) {
         console.log("error log", err);

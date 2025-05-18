@@ -35,6 +35,8 @@ function Login() {
                 }
             );
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+
             if (res.data.success) {
                 setResult("Login Successful");
                 navigate("/");
@@ -42,6 +44,7 @@ function Login() {
                 setResult("Invalid Credentials");
             }
         } catch (err) {
+            console.log(err);
             setResult("An error occurred. Please try again.");
         } finally {
             setLoading(false);
@@ -60,7 +63,7 @@ function Login() {
                     </label>
                     <input
                         onChange={(e) => setEmail(e.target.value)}
-                        type="email"
+                        type="text"
                         name="email"
                         className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter your email"

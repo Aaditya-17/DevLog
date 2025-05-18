@@ -4,20 +4,8 @@ const { User } = require("../models");
 const { StatusCodes } = require("http-status-codes");
 const { serverConfig } = require("../config");
 const { Op } = require("sequelize");
-const multer = require("multer");
-const path = require("path");
 
 const JWT_EXPIRES_IN = "1d";
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../../uploads")); // Save files to the 'uploads' folder
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    },
-});
-const upload = multer({ storage });
 
 const register = async (req, res) => {
     try {
@@ -118,5 +106,4 @@ module.exports = {
     login,
     checkEmail,
     checkUsername,
-    upload,
 };

@@ -4,7 +4,7 @@ function NavBar() {
     return (
         <nav className="flex items-center justify-between px-6 py-4 bg-white shadow">
             <Link to="/" className="text-xl font-bold text-blue-600">
-                DevLogged
+                DevLogged!
             </Link>
             <div>
                 <Link to="/" className="mx-2">
