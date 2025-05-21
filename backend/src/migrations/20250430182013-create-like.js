@@ -3,6 +3,12 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable("Likes", {
+            id: {
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true,
+                type: Sequelize.INTEGER,
+            },
             user_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
@@ -31,12 +37,6 @@ module.exports = {
                 type: Sequelize.DATE,
                 defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
             },
-        });
-
-        await queryInterface.addConstraint("Likes", {
-            fields: ["user_id", "post_id"],
-            type: "primary key",
-            name: "likes_pkey",
         });
     },
     down: async (queryInterface, Sequelize) => {
